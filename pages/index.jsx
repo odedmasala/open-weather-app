@@ -1,7 +1,7 @@
 import axios from "axios";
 import Head from "next/head";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { Spinner, Weather } from "../components";
 
@@ -21,10 +21,7 @@ export default function Home() {
     }
     setLoading(false);
   };
-  // useEffect(()=>{
-  //  fetchWeather()
 
-  // },[])
   console.log(weather);
   return (
     <div>
@@ -37,18 +34,27 @@ export default function Home() {
       <Image
         src="https://images.unsplash.com/photo-1601134467661-3d775b999c8b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=775&q=80"
         layout="fill"
-        className="object-fill"
+        className="object-cover"
       />
-      <div>
-        <form>
+      <div className="relative flex justify-between items-center max-w-[500px] w-full m-auto pt-4 px-4 text-white z-10">
+        <form
+          className="flex justify-between items-center w-full m-auto p-3 bg-transparent border border-gray-300 text-white rounded-2xl"
+          onSubmit={fetchWeather}
+        >
           <div>
-            <input type={"text"} placeholder="search city" />
+            <input
+              className="bg-transparent border-none text-white focus:outline-none text-2xl"
+              type={"text"}
+              placeholder="search city"
+            />
           </div>
-          <button onClick={() => fetchWeather()}>
-            <BsSearch />
+          <button onClick={fetchWeather}>
+            <BsSearch size={20}/>
           </button>
         </form>
       </div>
+      {/* weather */}
+      {weather.main && <Weather />}
     </div>
   );
 }
