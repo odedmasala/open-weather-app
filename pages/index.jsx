@@ -7,11 +7,12 @@ import { Spinner, Weather } from "../components";
 
 export default function Home() {
   const [city, setCity] = useState("");
-  const [weather, setWeather] = useState("");
+  const [weather, setWeather] = useState({});
   const [loading, setLoading] = useState(false);
   const url = `https://api.openweathermap.org/data/2.5/weather?q=dubai&units=metric&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}`;
 
-  const fetchWeather = async () => {
+  const fetchWeather = async (e) => {
+    e.preventDefault();
     setLoading(true);
     try {
       const { data } = await axios.get(url);
@@ -19,10 +20,9 @@ export default function Home() {
     } catch (e) {
       console.log({ msg: e });
     }
+    setCity('');
     setLoading(false);
   };
-
-  console.log(weather);
   return (
     <div>
       <Head>
@@ -54,7 +54,7 @@ export default function Home() {
         </form>
       </div>
       {/* weather */}
-      {weather.main && <Weather />}
+      {weather.main && <Weather data={weather} />}
     </div>
   );
 }
