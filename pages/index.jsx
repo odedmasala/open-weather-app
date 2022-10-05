@@ -3,6 +3,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { BsSearch } from "react-icons/bs";
+import { Spinner, Weather } from "../components";
 
 export default function Home() {
   const [city, setCity] = useState("");
