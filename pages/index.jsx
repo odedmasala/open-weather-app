@@ -11,15 +11,12 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}`;
 
-  const fetchWeather = async (e) => {
+  const fetchWeather = (e) => {
     e.preventDefault();
     setLoading(true);
-    try {
-      const { data } = await axios.get(url);
-      setWeather(data);
-    } catch (e) {
-      console.log({ msg: e });
-    }
+    axios.get(url).then((response) => {
+      setWeather(response.data);
+    });
     setCity("");
     setLoading(false);
   };
@@ -46,7 +43,7 @@ export default function Home() {
           >
             <div>
               <input
-              onChange={(e) => setCity(e.target.value)}
+                onChange={(e) => setCity(e.target.value)}
                 className="bg-transparent border-none text-white focus:outline-none text-2xl"
                 type={"text"}
                 placeholder="search city"
@@ -58,7 +55,7 @@ export default function Home() {
           </form>
         </div>
         {/* weather */}
-        {weather.main && <Weather data={weather} />}
+        {weather?.main && <Weather data={weather} />}
       </div>
     );
   }
